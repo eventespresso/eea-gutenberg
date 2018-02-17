@@ -1,0 +1,21 @@
+{
+  "name": "eventespresso/eea-gutenberg",
+  "description": "Add-on for experiments with Event Espresso - Gutenberg integration.",
+  "homepage": "https://eventespresso.com",
+  "type": "wordpress-plugin",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Darren Ethier",
+      "email": "darren@roughsmootheng.in",
+      "homepage": "http://roughsmootheng.in"
+    }
+  ],
+  "require": {
+    "php": ">=7",
+    "composer/installers": "v1.0.6"
+  },
+  "autoload": {
+    "psr-4": {"EE\\Gutenberg\\": "src/"}
+  }
+}
