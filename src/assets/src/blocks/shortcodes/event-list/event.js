@@ -9,9 +9,5 @@ import React from 'react';
 const { decodeEntities } = wp.utils;
 
 export default function Event( { event } ) {
-    return <React.Fragment>
-        <li>
-            <a href={event.link} target="_blank">{ decodeEntities( event.EVT_name.trim() ) || 'Untitled' }</a>
-        </li>
-    </React.Fragment>
+    return <a key={'link-'+event.EVT_ID} href={event.link} target="_blank">{ decodeEntities( event.EVT_name.trim() ) || 'Untitled' }</a>
 }

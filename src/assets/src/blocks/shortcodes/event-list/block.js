@@ -20,6 +20,7 @@ const {
     SelectControl
 } = wp.components;
 const { InspectorControls } = wp.blocks;
+const nowDateAndTime = moment();
 
 /**
  * Internal dependencies
@@ -166,21 +167,25 @@ class EventsListBlock extends Component {
 
         return [
             inspectorControls,
-            listTitle,
-            <p key='event-list-paragraph-info'>
-                {"Note this is just a sample preview, it's not actually what gets output in the front.  When we implement this block more fully, we'll want to mirror what appears on the frontend"}
-            </p>,
-            <ul
-                className={this.props.className}
-                key="event-list"
-            >
-                { displayEvents.map( (event, i) =>
-                    <Event
-                        key={event.EVT_ID}
-                        event={event}
-                    />
-                 ) }
-            </ul>
+            <div key='eea-event-list-block'>
+                { listTitle }
+                <p key='event-list-paragraph-info'>
+                    {"Note this is just a sample preview, it's not actually what gets output in the front.  When we implement this block more fully, we'll want to mirror what appears on the frontend"}
+                </p>
+                <ul
+                    className={this.props.className}
+                    key="event-list"
+                >
+                    { displayEvents.map( (event, i) =>
+                        <li key={ i }>
+                            <Event
+                                key={event.EVT_ID}
+                                event={event}
+                            />
+                        </li>
+                     ) }
+                </ul>
+            </div>
         ]
     }
 }
@@ -214,7 +219,7 @@ const whereConditions = ({showExpired, categorySlug, month}) => {
     //moment formatted strings (@see https://events.codebasehq.com/projects/event-espresso/tickets/11368)
     if (! showExpired) {
         where.push('where[Datetime.DTT_EVT_end**expired][]=>&where[Datetime.DTT_EVT_end**expired][]='
-            + moment().utc().format().replace('Z', ''));
+            + nowDateAndTime.utc().format().replace('Z', ''));
     }
     if (categorySlug) {
         where.push('where[Term_Relationship.Term_Taxonomy.Term.slug]=' + categorySlug);
