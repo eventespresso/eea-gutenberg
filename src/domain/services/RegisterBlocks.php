@@ -2,6 +2,12 @@
 namespace EE\Gutenberg\domain\services;
 
 use EE\Gutenberg\domain\Domain;
+use EE_Error;
+use EventEspresso\core\domain\entities\shortcodes\EspressoEvents;
+use EventEspresso\core\exceptions\InvalidDataTypeException;
+use EventEspresso\core\exceptions\InvalidInterfaceException;
+use EventEspresso\core\services\loaders\LoaderFactory;
+use InvalidArgumentException;
 use WP_Block_Type;
 
 /**
@@ -84,9 +90,44 @@ class RegisterBlocks
     }
 
 
-    public function eventListRender($attributes)
+    /**
+     * @param array $attributes
+     * @return string
+     * @throws InvalidArgumentException
+     * @throws InvalidDataTypeException
+     * @throws InvalidInterfaceException
+     * @throws EE_Error
+     */
+    public function eventListRender(array $attributes = array())
     {
-        //@todo connect this with the existing shortcode render, from the shortcodes class but remember attributes will
-        //be what is defined (see above).
+        /** @var EspressoEvents $shortcode */
+        $shortcode = LoaderFactory::getLoader()->getShared(EspressoEvents::class);
+        $attributes = $this->mapAttributes($attributes);
+        return $shortcode->processShortcodeCallback($attributes);
+    }
+
+
+    /**
+     * Maps new style block attributes to old style shortcode attribute keys.
+     * @param array $attributes
+     * @return array
+     */
+    private function mapAttributes(array $attributes)
+    {
+        $replacements = array(
+            'cssClass' => 'css_class',
+            'showExpired' => 'show_expired',
+            'categorySlug' => 'category_slug',
+            'orderBy' => 'order_by',
+            'order' => 'sort',
+            'showTitle' => 'show_title'
+        );
+        $new_attributes = array();
+        array_walk($attributes, function ($value, $key) use (&$new_attributes, $replacements) {
+            $new_key = isset($replacements[$key]) ? $replacements[$key] : $key;
+            $value = $value === 'none' ? null : $value;
+            $new_attributes[$new_key] = $value;
+        });
+        return $new_attributes;
     }
 }
