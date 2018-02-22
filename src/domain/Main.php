@@ -2,6 +2,7 @@
 namespace EE\Gutenberg\domain;
 
 use DomainException;
+use EE\Gutenberg\domain\services\Initialize;
 use EE\Gutenberg\domain\services\RegisterBlocks;
 use EE_Addon;
 use EE_Dependency_Map;
@@ -48,12 +49,16 @@ class Main extends EE_Addon
     }
 
 
+    /**
+     * Take care of registering gutenberg related integration.
+     */
     public function after_registration()
     {
         $this->registerDependencies();
         add_action('AHEE__EE_System__core_loaded_and_ready', function () {
             LoaderFactory::getLoader()->getShared(RegisterBlocks::class);
         });
+        LoaderFactory::getLoader()->getShared(Initialize::class);
     }
 
 
@@ -61,6 +66,12 @@ class Main extends EE_Addon
     {
         $this->dependencyMap()->registerDependencies(
             RegisterBlocks::class,
+            array(
+                Domain::class => EE_Dependency_Map::load_from_cache
+            )
+        );
+        $this->dependencyMap()->registerDependencies(
+            Initialize::class,
             array(
                 Domain::class => EE_Dependency_Map::load_from_cache
             )
