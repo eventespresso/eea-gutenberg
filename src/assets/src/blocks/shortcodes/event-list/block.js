@@ -219,16 +219,16 @@ const whereConditions = ({showExpired, categorySlug, month}) => {
     //moment formatted strings (@see https://events.codebasehq.com/projects/event-espresso/tickets/11368)
     if (! showExpired) {
         where.push('where[Datetime.DTT_EVT_end**expired][]=>&where[Datetime.DTT_EVT_end**expired][]='
-            + nowDateAndTime.utc().format().replace('Z', ''));
+            + nowDateAndTime.local().format());
     }
     if (categorySlug) {
         where.push('where[Term_Relationship.Term_Taxonomy.Term.slug]=' + categorySlug);
     }
     if (month && month !== 'none') {
         where.push('where[Datetime.DTT_EVT_start][]='+ GREATER_AND_EQUAL + '&where[Datetime.DTT_EVT_start][]='
-            + moment().month(month).startOf('month').utc().format().replace('Z', ''));
+            + moment().month(month).startOf('month').local().format());
         where.push('where[Datetime.DTT_EVT_end][]=' + LESS_AND_EQUAL + '&where[Datetime.DTT_EVT_end][]='
-            + moment().month(month).endOf('month').utc().format().replace('Z', ''));
+            + moment().month(month).endOf('month').local().format());
     }
     return where.join('&');
 };
