@@ -7,7 +7,7 @@ use EventEspresso\core\domain\DomainBase;
  * Domain
  *
  *
- * @package EventSmart\SubscriptionManagement\domain
+ * @package EE\Gutenberg\domain
  * @author  Darren Ethier
  * @since   1.0.0
  */
