@@ -12,14 +12,6 @@ const externals = {};
     externals[`@wordpress/${name}`] = {this:['wp', name]}
 });
 /** see below for multiple configurations.
- * - one configuration would be to have os-common.js built as a library with the target being osjs.[name]
- *   (see how gutenberg exported wpjs object: https://github.com/WordPress/gutenberg/blob/master/webpack.config.js)
- * - the other configuration will be something similar to below where we setup the "main" js files that would be
- *   enqueued by wp.
- * - a problem I will encounter is that I'm using webpack-merge to do a dev and a production build.  That makes things
- *   more tricky with the multiple configurations.
- *
- */
 /** https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations */
 config = [
     {
