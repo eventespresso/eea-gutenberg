@@ -24,9 +24,11 @@ const externals = {};
 config = [
     {
         entry: {
-            'ee-blocks': [
-                'babel-polyfill',
+            'ee-shortcode-blocks': [
                 assets + 'blocks/index.js'
+            ],
+            'ee-event-editor-blocks': [
+                assets + 'blocks/event-editor-blocks/index.js'
             ]
         },
         plugins: [
