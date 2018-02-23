@@ -11,7 +11,7 @@ const { registerBlockType } = wp.blocks;
 /**
  * Internal Dependencies
  */
-import EventListBlock from './block.js';
+import EventListBlock from './block';
 
 export default () => registerBlockType(
     'ee-shortcodes/events-list',

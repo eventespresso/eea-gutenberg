@@ -36,17 +36,54 @@ class RegisterBlocks
     private function init()
     {
         wp_register_script(
-            'ee-shortcodes-events-list',
-            $this->domain->assetsUrl() . 'dist/ee-blocks.dist.js',
+            'ee-shortcode-blocks',
+            $this->domain->assetsUrl() . 'dist/ee-shortcode-blocks.dist.js',
             array('wp-blocks'),
-            filemtime($this->domain->pluginPath() . 'src/assets/dist/ee-blocks.dist.js')
+            filemtime($this->domain->pluginPath() . 'src/assets/dist/ee-shortcode-blocks.dist.js')
+        );
+
+        wp_register_script(
+            'ee-event-editor-blocks',
+            $this->domain->assetsUrl() . 'dist/ee-event-editor-blocks.dist.js',
+            array('wp-blocks'),
+            filemtime($this->domain->pluginPath() . 'src/assets/dist/ee-event-editor-blocks.dist.js')
+        );
+
+        wp_register_style(
+            'ee-block-styles',
+            $this->domain->assetsUrl() . 'dist/style.css',
+            array(),
+            filemtime($this->domain->pluginPath() . 'src/assets/dist/style.css')
+        );
+
+        register_block_type(
+            new WP_Block_Type(
+                'ee-event-editor/ticket-editor-container',
+                array(
+                    'editor_script' => 'ee-event-editor-blocks',
+                    'editor_style' => 'ee-block-styles',
+                    'attributes' => array(),
+                )
+            )
+        );
+
+        register_block_type(
+            new WP_Block_Type(
+                'ee-event-editor/venue-container',
+                array(
+                    'editor_script' => 'ee-event-editor-blocks',
+                    'editor_style' => 'ee-block-styles',
+                    'attributes' => array(),
+                )
+            )
         );
 
         register_block_type(
             new WP_Block_Type(
                 'ee-shortcodes/events-list',
                 array(
-                    'editor_script' => 'ee-shortcodes-events-list',
+                    'editor_script' => 'ee-shortcode-blocks',
+                    'editor_style' => 'ee-block-styles',
                     'render_callback' => array($this, 'eventListRender'),
                     'attributes' => array(
                         'title' => array(

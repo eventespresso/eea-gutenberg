@@ -2,6 +2,8 @@
 namespace EE\Gutenberg\domain\services;
 
 use EE\Gutenberg\domain\Domain;
+use EE_Error;
+use EE_Event;
 use WP_Post_Type;
 
 /**
@@ -44,6 +46,28 @@ class Initialize
             2
         );
         add_action('admin_url', array($this, 'coerceEeCptEditorUrlForGutenberg'), 10, 3);/**/
+        add_action('load-post.php', array($this, 'deRegisterBlocks'));
+        add_action('load-post-new.php', array($this, 'deRegisterBlocks'));
+        add_action('AHEE__EE_Admin_Page_CPT__set_model_object__after_set_object', function ($event, $reg_type) {
+            if ($event instanceof EE_Event) {
+                EE_Error::reset_notices();
+            }
+        }, 15, 2);
+    }
+
+
+    /**
+     * This takes care of deregistering any registered EE blocks that we don't want loading on default WP post routes.
+     * Currently Gutenberg doesn't have an api for registering a block with a specific post type.
+     */
+    public function deRegisterBlocks()
+    {
+        add_action('admin_enqueue_scripts', function(){
+            global $post_type_object;
+            if ($post_type_object->name !== 'espresso_events') {
+                unregister_block_type('ee-event-editor/ticket-editor-container');
+            }
+        });
     }
 
 
@@ -90,6 +114,13 @@ class Initialize
                 : null;
             if ($post_type_object instanceof WP_Post_Type) {
                 $post_type_object->show_in_rest = true;
+                $post_type_object->template = array(
+                    array('core/paragraph', array(
+                        'placeholder' => esc_html__('Add description...', 'event_espresso')
+                    )),
+                    array('ee-event-editor/ticket-editor-container', array()),
+                    array('ee-event-editor/venue-container', array())
+                );
             }
         }
     }
