@@ -3,7 +3,7 @@
  * Plugin Name: Event Espresso Gutenberg Integration Experimentation
  * Plugin URI: https://eventespresso.com
  * Description: Add-on for experiments with Event Espresso - Gutenberg integration.
- * Version: 1.1.rc.000
+ * Version: 1.2.000.rc
  * Author: Darren Ethier
  * Author URI: http://roughsmootheng.in
  * Copyright 2018 Event Espresso (email: support@eventespresso.com)
