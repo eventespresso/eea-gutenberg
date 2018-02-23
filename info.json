@@ -1,0 +1,19 @@
+{
+  "versionFile": "eea-gutenberg.php",
+  "slug": "eea-gutenberg",
+  "name": "EE4 Gutenberg Integration Experiment",
+  "releaseFilesRemove": [
+    "src\/tests\/**",
+    "src\/info.json",
+    "src\/circle.yml",
+    "src\/readme.txt",
+    "src/.travis.yml",
+    "src\/src\/**"
+  ],
+  "github": true,
+  "srcBuildFolderName": "eea-gutenberg",
+  "textDomain": "event_espresso",
+  "remoteNamesToPushTo": [
+    "devboxsitehub"
+  ]
+}
