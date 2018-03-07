@@ -16,6 +16,6 @@ Currently there's a very basic Event List block available for posts and page pos
 
 ### EE CPT Editors
 
-EE uses custom admin routes (events, venues, contacts) and Gutenberg can be enabled on them by simply appending `&with_gutenberg` to the url.  When adding a new event with Gutenberg enabled, there is a default template that will load a ticket editor block and a venue block.  Both blocks are just shells right now.
+EE uses custom admin routes (events, venues, contacts) and Gutenberg can be enabled on them by simply appending `&eegb` to the url.  When adding a new event with Gutenberg enabled, there is a default template that will load a ticket editor block and a venue block.  Both blocks are just shells right now.
 
 **Be aware that saving an event while it is being edited in Gutenberg could result in loss of any attached event meta data.  Things are not fully wired up yet.** 
