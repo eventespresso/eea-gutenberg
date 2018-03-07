@@ -17,6 +17,8 @@ use WP_Post_Type;
 class Initialize
 {
 
+    const REQUEST_PARAM_USE_GUTENBERG = 'eegb';
+
     /**
      * @var Domain
      */
@@ -88,7 +90,7 @@ class Initialize
      */
     public function gutenbergInit($return, $post)
     {
-        if (isset($_GET['with_gutenberg']) && function_exists('gutenberg_init')) {
+        if (isset($_GET[ Initialize::REQUEST_PARAM_USE_GUTENBERG])) {
             gutenberg_init($return, $post);
             return true;
         }
