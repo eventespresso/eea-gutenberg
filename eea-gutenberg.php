@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Event Espresso Gutenberg Integration Experimentation
+ * Plugin Name: Gutenberg - Event Espresso Integration
  * Plugin URI: https://eventespresso.com
  * Description: Add-on for experiments with Event Espresso - Gutenberg integration.
  * Version: 1.2.1.rc.001
@@ -54,7 +54,9 @@ add_action('activated_plugin', 'eeGutenbergPluginActivationErrors');
  */
 function loadEeGutenberg()
 {
-    if (class_exists('EE_Addon')
+    if (
+        defined('GUTENBERG_VERSION')
+        && class_exists('EE_Addon')
         && version_compare(EVENT_ESPRESSO_VERSION, '4.9.57.p', '>')
     ) {
         //register dependencies for main Addon class
@@ -101,7 +103,7 @@ function eeGutenbergActivationError()
     <div class="error">
         <p><?php printf(
                 esc_html__(
-                    'EE Gutenberg Experiments could not be activated. Please ensure that Event Espresso version %1$s or higher is active on your site.',
+                    'EE Gutenberg Experiments could not be activated. Please ensure that the Gutenberg plugin is activated and Event Espresso version %1$s or higher is active on your site.',
                     'event_espresso'
                 ),
                 '4.9.57.p'
