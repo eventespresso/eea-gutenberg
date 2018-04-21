@@ -10,7 +10,6 @@
     "src/.travis.yml",
     "src\/src\/**"
   ],
-  "github": true,
   "srcBuildFolderName": "eea-gutenberg",
   "textDomain": "event_espresso",
   "remoteNamesToPushTo": [
